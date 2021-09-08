@@ -1,7 +1,5 @@
 package br.com.springboot.CidadeClienteApi.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,18 +20,18 @@ public class CidadeController {
 	@Autowired
 	private CidadeService service;
 	
-	@PostMapping(value = "/salvar", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CidadeDTO> saveCidade(@RequestBody CidadeDTO dto){
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> saveCidade(@RequestBody CidadeDTO dto){
 		return service.save(dto);
 	}
 
-	@GetMapping("/find/{nome}")
-	public ResponseEntity<List<CidadeDTO>> findByNome(@PathVariable("nome") String nome){
-		return service.getCidadesByNome(nome);
+	@GetMapping("/ByNome/{search}")
+	public ResponseEntity<Object> findByNome(@PathVariable("search") String search){
+		return service.getCidadesByNome(search);
 	}
 
-	@GetMapping("/estado/find/{nome}")
-	public ResponseEntity<List<CidadeDTO>> findByEstadoNome(@PathVariable("nome") String nome){
-		return service.getCidadesByEstado(nome);
+	@GetMapping("/ByEstado/{search}")
+	public ResponseEntity<Object> findByEstadoNome(@PathVariable("search") String search){
+		return service.getCidadesByEstado(search);
 	}
 }

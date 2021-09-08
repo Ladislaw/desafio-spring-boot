@@ -13,5 +13,6 @@ public class ClienteDTO {
 	private String sexo;
 	private String dtNascimento;
 	private Integer idade;
-	private String cidade; 
+	private String cidade;
+	private String estado;
 }

@@ -1,6 +1,6 @@
 package br.com.springboot.CidadeClienteApi.service;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -27,25 +27,32 @@ public class ClienteService {
 	@Autowired
 	private ModelMapper mapper;
 	
-	public ResponseEntity<ClienteDTO> save(ClienteDTO dto){
+	public ResponseEntity<Object> save(ClienteDTO dto){
 		
-		Cidade cidade = cidadeRepo.findByNome(dto.getCidade()).stream().findAny().map(achou -> achou)
-				.orElseThrow(() -> new RuntimeException("Cidade não encontrada!"));
+		Optional<Cidade> cidade = cidadeRepo.findByNome(dto.getCidade()).stream().findAny();
+		if (!cidade.isPresent()) {
+			return ApiError.response(HttpStatus.NOT_FOUND, "Cidade não encontrada!");
+		}
 		
 		Cliente cliente = toEntity(dto);
-		cliente.setCidade(cidade);
+		cliente.setCidade(cidade.get());
 		cliente = repo.save(cliente);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(toDto(cliente));
 	}
 	
-	public ResponseEntity<List<ClienteDTO>> findByNome(String search){
-		return ResponseEntity.ok(repo.findByNome(search).stream().map(this::toDto).collect(Collectors.toList()));
+	public ResponseEntity<Object> findById(Long id){
+		
+		Optional<Cliente> cliente = repo.findById(id);
+		if (!cliente.isPresent()) {
+			return ApiError.response(HttpStatus.NOT_FOUND, "Cliente não encontrada!");
+		}
+		
+		return ResponseEntity.ok(toDto(cliente.get()));
 	}
 	
-	public ResponseEntity<ClienteDTO> findById(Long id){
-		return ResponseEntity.ok(repo.findById(id).map(achou -> toDto(achou))
-				.orElseThrow(() -> new RuntimeException("Cliente não encontrado!")));
+	public ResponseEntity<Object> findByNome(String search){
+		return ResponseEntity.ok(repo.findByNome(search).stream().map(this::toDto).collect(Collectors.toList()));
 	}
 	
 	private Cliente toEntity(ClienteDTO dto) {

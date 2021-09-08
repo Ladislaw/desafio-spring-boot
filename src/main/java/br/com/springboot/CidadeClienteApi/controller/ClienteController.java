@@ -1,13 +1,10 @@
 package br.com.springboot.CidadeClienteApi.controller;
 
-import java.util.List;
-
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,17 +21,17 @@ public class ClienteController {
 	private ClienteService service;
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ClienteDTO> create(@RequestBody ClienteDTO cliente){
+	public ResponseEntity<Object> create(@RequestBody ClienteDTO cliente){
 		return service.save(cliente);
 	}
 	
 	@GetMapping("/ById/{search}")
-	public ResponseEntity<ClienteDTO> getById(@PathParam("search") Long search){
+	public ResponseEntity<Object> getById(@PathVariable("search") Long search){
 		return service.findById(search);
 	}
 	
 	@GetMapping("/ByNome/{search}")
-	public ResponseEntity<List<ClienteDTO>> getByNome(@PathParam("search") String search){
+	public ResponseEntity<Object> getByNome(@PathVariable("search") String search){
 		return service.findByNome(search);
 	}
 }

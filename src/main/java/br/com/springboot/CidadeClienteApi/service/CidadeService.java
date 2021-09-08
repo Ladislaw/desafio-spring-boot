@@ -1,6 +1,5 @@
 package br.com.springboot.CidadeClienteApi.service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -27,7 +26,12 @@ public class CidadeService {
 	@Autowired
 	private ModelMapper mapper;
 	
-	public ResponseEntity<CidadeDTO> save(CidadeDTO dto){
+	public ResponseEntity<Object> save(CidadeDTO dto){
+		
+		if (!repo.findByNome(dto.getNome()).isEmpty()) {
+			return ApiError.response(HttpStatus.BAD_REQUEST, "Cidade já existe!");
+		}
+		
 		Cidade cidade = toEntity(dto);
 		Estado estado = estadoRepo.findByNome(dto.getEstado()).stream().findAny().map(achou -> achou)
 				.orElse(estadoRepo.save(cidade.getEstado()));
@@ -37,11 +41,11 @@ public class CidadeService {
 		return ResponseEntity.status(HttpStatus.CREATED).body(toDto(cidade));
 	}
 	
-	public ResponseEntity<List<CidadeDTO>> getCidadesByNome(String search){
+	public ResponseEntity<Object> getCidadesByNome(String search){
 		return ResponseEntity.ok(repo.findByNome(search).stream().map(this::toDto).collect(Collectors.toList()));
 	}
 
-	public ResponseEntity<List<CidadeDTO>> getCidadesByEstado(String search){
+	public ResponseEntity<Object> getCidadesByEstado(String search){
 		return ResponseEntity.ok(repo.findByEstado(search).stream().map(this::toDto).collect(Collectors.toList()));
 	}
 	
