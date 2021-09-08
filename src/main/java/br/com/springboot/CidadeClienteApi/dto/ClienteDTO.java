@@ -7,7 +7,9 @@ import lombok.Setter;
 @Setter
 public class ClienteDTO {
 
-	private String nomeCompleto;
+	private Long id;
+	private String nome;
+	private String sobrenome;
 	private String sexo;
 	private String dtNascimento;
 	private Integer idade;
