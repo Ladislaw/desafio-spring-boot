@@ -34,11 +34,11 @@ public class ClienteService {
 			return ApiError.response(HttpStatus.NOT_FOUND, "Cidade não encontrada!");
 		}
 		
-		Cliente cliente = toEntity(dto);
+		Cliente cliente = mapToEntity(dto);
 		cliente.setCidade(cidade.get());
 		cliente = repo.save(cliente);
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(toDto(cliente));
+		return ResponseEntity.status(HttpStatus.CREATED).body(mapToDto(cliente));
 	}
 	
 	public ResponseEntity<Object> findById(Long id){
@@ -48,18 +48,18 @@ public class ClienteService {
 			return ApiError.response(HttpStatus.NOT_FOUND, "Cliente não encontrada!");
 		}
 		
-		return ResponseEntity.ok(toDto(cliente.get()));
+		return ResponseEntity.ok(mapToDto(cliente.get()));
 	}
 	
 	public ResponseEntity<Object> findByNome(String search){
-		return ResponseEntity.ok(repo.findByNome(search).stream().map(this::toDto).collect(Collectors.toList()));
+		return ResponseEntity.ok(repo.findByNomeOrSobrenome(search).stream().map(this::mapToDto).collect(Collectors.toList()));
 	}
 	
-	private Cliente toEntity(ClienteDTO dto) {
+	private Cliente mapToEntity(ClienteDTO dto) {
 		return mapper.map(dto, Cliente.class);
 	}
 
-	private ClienteDTO toDto(Cliente entity) {
+	private ClienteDTO mapToDto(Cliente entity) {
 		return mapper.map(entity, ClienteDTO.class);
 	}
 }
