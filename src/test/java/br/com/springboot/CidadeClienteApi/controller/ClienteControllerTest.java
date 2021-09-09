@@ -45,6 +45,42 @@ public class ClienteControllerTest {
 		
 		assertEquals(HttpStatus.OK.value(), controller.update(dto).getStatusCodeValue());
 	}
+
+	@Test
+	public void deleteCliente_teste() {
+		ClienteDTO dto = getDto();
+		dto.setId(1l);
+		
+		ResponseEntity<Object> responseTest = ResponseEntity.status(HttpStatus.OK).body("");
+		
+		Mockito.when(service.delete(dto.getId())).thenReturn(responseTest);
+		
+		assertEquals(HttpStatus.OK.value(), controller.delete(dto.getId()).getStatusCodeValue());
+	}
+	
+	@Test
+	public void findById_test() {
+		ClienteDTO dto = getDto();
+		dto.setId(1l);
+		
+		ResponseEntity<Object> responseTest = ResponseEntity.status(HttpStatus.OK).body(dto);
+		
+		Mockito.when(service.findById(dto.getId())).thenReturn(responseTest);
+		
+		assertEquals(HttpStatus.OK.value(), controller.getById(dto.getId()).getStatusCodeValue());
+	}
+
+	@Test
+	public void findByNome_test() {
+		ClienteDTO dto = getDto();
+		dto.setId(1l);
+		
+		ResponseEntity<Object> responseTest = ResponseEntity.status(HttpStatus.OK).body(dto);
+		
+		Mockito.when(service.findByNome(dto.getNome())).thenReturn(responseTest);
+		
+		assertEquals(HttpStatus.OK.value(), controller.getByNome(dto.getNome()).getStatusCodeValue());
+	}
 	
 	private ClienteDTO getDto() {
 		ClienteDTO retorno = new ClienteDTO();
