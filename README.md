@@ -1,6 +1,6 @@
 # desafio-spring-boot
 
-Projeto feito para criar uma API Rest utilizando o Spring boot.
+Projeto feito com o intuito de criar uma API Rest utilizando o Spring boot.
 
 Stack: Java 8, Spring Boot, Spring Web, Spring Data, H2database, Lombok, ModelMapper, JUnit, Swagger.
 
