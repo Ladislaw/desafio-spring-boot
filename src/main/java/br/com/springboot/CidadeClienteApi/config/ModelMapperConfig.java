@@ -22,6 +22,7 @@ public class ModelMapperConfig {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
+		/* Conversão de data string para localdate */
 	    Converter<String, LocalDate> toLocalDate = new AbstractConverter<String, LocalDate>() {
 	        @Override
 	        protected LocalDate convert(String source) {
@@ -29,6 +30,7 @@ public class ModelMapperConfig {
 	        }
 	    };
 
+	    /* Conversão de data localdate para string */
 	    Converter<LocalDate, String> toStringDate = new AbstractConverter<LocalDate, String>() {
 	    	@Override
 	    	protected String convert(LocalDate source) {
@@ -36,8 +38,22 @@ public class ModelMapperConfig {
 	    	}
 	    };
 	    
-	    Converter<String, String> toDescricaoSexo = obj -> obj.getSource().equals("M") ? "Masculino" : "Feminino";
+	    /* Conversão de sexo do cliente para descrição */
+	    Converter<String, String> toDescricaoSexo = new AbstractConverter<String, String>() {
+	    	@Override
+	    	protected String convert(String source) {
+	    		switch (source) {
+				case "M":
+					return "Masculino";
+				case "F":
+					return "Feminino";
+				default:
+					return null;
+				}
+	    	}
+	    };
 
+	    /* Definição de conversões */
 	    ModelMapper mapper = new ModelMapper();
 
 	    /* Classe DTO para Entidade */

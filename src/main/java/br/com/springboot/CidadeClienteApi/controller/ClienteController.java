@@ -1,6 +1,5 @@
 package br.com.springboot.CidadeClienteApi.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,8 +21,11 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/cliente", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ClienteController {
 	
-	@Autowired
 	private ClienteService service;
+	
+	public ClienteController(ClienteService service) {
+		this.service = service;
+	}
 
 	@ApiOperation("Cria um novo cliente")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

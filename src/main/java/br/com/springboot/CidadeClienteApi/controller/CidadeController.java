@@ -1,6 +1,5 @@
 package br.com.springboot.CidadeClienteApi.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +19,11 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/cidade", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class CidadeController {
 
-	@Autowired
 	private CidadeService service;
+	
+	public CidadeController(CidadeService service) {
+		this.service = service;
+	}
 	
 	@ApiOperation("Cria uma nova Cidade")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

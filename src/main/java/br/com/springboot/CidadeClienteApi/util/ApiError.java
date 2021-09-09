@@ -1,4 +1,4 @@
-package br.com.springboot.CidadeClienteApi.service;
+package br.com.springboot.CidadeClienteApi.util;
 
 import java.io.Serializable;
 

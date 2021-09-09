@@ -7,9 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan({"br.com.springboot.CidadeClienteApi.controller"})
+@ComponentScan({"br.com.springboot.CidadeClienteApi"})
 @EntityScan({"br.com.springboot.CidadeClienteApi.model"})
-@ComponentScan({"br.com.springboot.CidadeClienteApi.service"})
 @EnableJpaRepositories({"br.com.springboot.CidadeClienteApi.repository"})
 public class CidadeClienteApiApplication {
 
