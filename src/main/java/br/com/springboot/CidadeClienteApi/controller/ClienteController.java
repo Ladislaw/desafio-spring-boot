@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.springboot.CidadeClienteApi.dto.ClienteDTO;
 import br.com.springboot.CidadeClienteApi.service.ClienteService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api("API Rest Cliente")
 @RestController
 @RequestMapping(value = "/cliente", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ClienteController {
@@ -22,28 +25,33 @@ public class ClienteController {
 	@Autowired
 	private ClienteService service;
 
+	@ApiOperation("Cria um novo cliente")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> create(@RequestBody ClienteDTO cliente){
 		return service.save(cliente);
 	}
 
+	@ApiOperation("Altera dados de um cliente existente")
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> update(@RequestBody ClienteDTO cliente){
 		return service.save(cliente);
 	}
-
+	
+	@ApiOperation("Deleta um cliente existente")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> delete(@PathVariable("id") Long id){
 		return service.delete(id);
 	}
 	
-	@GetMapping("/ById/{search}")
-	public ResponseEntity<Object> getById(@PathVariable("search") Long search){
-		return service.findById(search);
+	@ApiOperation("Buscar Cliente pelo ID")
+	@GetMapping("/ById/{id}")
+	public ResponseEntity<Object> getById(@PathVariable("id") Long id){
+		return service.findById(id);
 	}
 	
-	@GetMapping("/ByNome/{search}")
-	public ResponseEntity<Object> getByNome(@PathVariable("search") String search){
-		return service.findByNome(search);
+	@ApiOperation("Buscar Cliente pelo Nome")
+	@GetMapping("/ByNome/{nome}")
+	public ResponseEntity<Object> getByNome(@PathVariable("nome") String nome){
+		return service.findByNome(nome);
 	}
 }

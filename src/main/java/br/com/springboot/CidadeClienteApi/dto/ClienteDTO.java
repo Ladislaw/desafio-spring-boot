@@ -1,5 +1,6 @@
 package br.com.springboot.CidadeClienteApi.dto;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ApiModel("Cliente")
 public class ClienteDTO {
 
 	private Long id;
