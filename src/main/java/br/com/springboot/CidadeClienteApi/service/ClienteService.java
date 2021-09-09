@@ -29,16 +29,32 @@ public class ClienteService {
 	
 	public ResponseEntity<Object> save(ClienteDTO dto){
 		
+		HttpStatus httpStatusReturn = HttpStatus.OK;
+		
 		Optional<Cidade> cidade = cidadeRepo.findByNome(dto.getCidade()).stream().findAny();
 		if (!cidade.isPresent()) {
 			return ApiError.response(HttpStatus.NOT_FOUND, "Cidade não encontrada!");
+		}
+		
+		if (dto.getId() != null && !repo.existsById(dto.getId())) {
+			return ApiError.response(HttpStatus.NOT_FOUND, "Cliente não encontrado!");
+		} else {
+			httpStatusReturn = HttpStatus.CREATED;
 		}
 		
 		Cliente cliente = mapToEntity(dto);
 		cliente.setCidade(cidade.get());
 		cliente = repo.save(cliente);
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(mapToDto(cliente));
+		return ResponseEntity.status(httpStatusReturn).body(mapToDto(cliente));
+	}
+	
+	public ResponseEntity<Object> delete(Long id){
+		if (repo.existsById(id)) {
+			repo.deleteById(id);
+			return ResponseEntity.ok("Cliente apagado com Sucesso!");
+		}
+		return ApiError.response(HttpStatus.NOT_FOUND, "Cliente com id: " + id + " não encontrado!");
 	}
 	
 	public ResponseEntity<Object> findById(Long id){

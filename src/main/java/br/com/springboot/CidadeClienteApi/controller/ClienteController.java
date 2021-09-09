@@ -3,6 +3,7 @@ package br.com.springboot.CidadeClienteApi.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,12 @@ public class ClienteController {
 	public ResponseEntity<Object> update(@RequestBody ClienteDTO cliente){
 		return service.save(cliente);
 	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Object> delete(@PathVariable("id") Long id){
+		return service.delete(id);
+	}
+	
 	@GetMapping("/ById/{search}")
 	public ResponseEntity<Object> getById(@PathVariable("search") Long search){
 		return service.findById(search);
