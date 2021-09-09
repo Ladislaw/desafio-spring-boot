@@ -10,14 +10,14 @@ Base Url da API: localhost:9090/api/v1
 
 Ações:
 
-Cadastrar Cidade;
-Cadastrar Cliente;
-Buscar Cidade Por Nome;
-Buscar Cidade Por Estado;
-Buscar Cliente Por Nome;
-Buscar Cliente Por Id;
-Alterar Cliente;
-Excluir Cliente;
+* Cadastrar Cidade;
+* Cadastrar Cliente;
+* Buscar Cidade Por Nome;
+* Buscar Cidade Por Estado;
+* Buscar Cliente Por Nome;
+* Buscar Cliente Por Id;
+* Alterar Cliente;
+* Excluir Cliente;
 
 Objeto Cidade:
 ```json
